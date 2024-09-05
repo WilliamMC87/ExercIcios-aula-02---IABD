@@ -1,0 +1,154 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Suponha que você já tenha um DataFrame chamado df
+# df = pd.read_csv('seu_arquivo.csv')  # Carregue seus dados aqui
+
+# Certifique-se de que a coluna 'data' está no formato datetime
+df['data'] = pd.to_datetime(df['data'])
+
+# 1. Gráfico Umidade x Ano
+plt.figure(figsize=(10, 6))
+plt.plot(df['ano'], df['umidade'], marker='o', linestyle='-', color='b')
+plt.title('Umidade x Ano', fontsize=16)
+plt.xlabel('Ano', fontsize=14)
+plt.ylabel('Umidade (%)', fontsize=14)
+plt.xticks(fontsize=12)
+plt.yticks(fontsize=12)
+plt.grid(True)
+plt.show()
+
+# 2. Gráfico Velocidade do Vento x Ano
+plt.figure(figsize=(10, 6))
+plt.plot(df['ano'], df['velocidade_vento'], marker='o', linestyle='-', color='r')
+plt.title('Velocidade do Vento x Ano', fontsize=16)
+plt.xlabel('Ano', fontsize=14)
+plt.ylabel('Velocidade do Vento (km/h)', fontsize=14)
+plt.xticks(fontsize=12)
+plt.yticks(fontsize=12)
+plt.grid(True)
+plt.show()
+
+# 3. Anotações no Gráfico de Umidade
+plt.figure(figsize=(10, 6))
+plt.plot(df['ano'], df['umidade'], marker='o', linestyle='-', color='b')
+plt.title('Umidade x Ano', fontsize=16)
+plt.xlabel('Ano', fontsize=14)
+plt.ylabel('Umidade (%)', fontsize=14)
+plt.xticks(fontsize=12)
+plt.yticks(fontsize=12)
+plt.grid(True)
+for i, value in enumerate(df['umidade']):
+    plt.text(df['ano'][i], value, f'{value:.1f}', fontsize=9, ha='right')
+plt.show()
+
+# 4. Anotações no Gráfico de Direção do Vento
+plt.figure(figsize=(10, 6))
+plt.plot(df['ano'], df['direcao_vento'], marker='o', linestyle='-', color='g')
+plt.title('Direção do Vento x Ano', fontsize=16)
+plt.xlabel('Ano', fontsize=14)
+plt.ylabel('Direção do Vento (°)', fontsize=14)
+plt.xticks(fontsize=12)
+plt.yticks(fontsize=12)
+plt.grid(True)
+for i, value in enumerate(df['direcao_vento']):
+    plt.text(df['ano'][i], value, f'{value:.1f}', fontsize=9, ha='right')
+plt.show()
+
+# 5. Anotações no Gráfico de Pressão
+plt.figure(figsize=(10, 6))
+plt.plot(df['ano'], df['pressao'], marker='o', linestyle='-', color='m')
+plt.title('Pressão x Ano', fontsize=16)
+plt.xlabel('Ano', fontsize=14)
+plt.ylabel('Pressão (hPa)', fontsize=14)
+plt.xticks(fontsize=12)
+plt.yticks(fontsize=12)
+plt.grid(True)
+for i, value in enumerate(df['pressao']):
+    plt.text(df['ano'][i], value, f'{value:.1f}', fontsize=9, ha='right')
+plt.show()
+
+# 6. Boxplot para a Umidade
+plt.figure(figsize=(8, 6))
+sns.boxplot(y=df['umidade'])
+plt.title('Boxplot da Umidade', fontsize=16)
+plt.ylabel('Umidade (%)', fontsize=14)
+plt.yticks(fontsize=12)
+plt.grid(True)
+plt.show()
+
+# 7. Boxplot para a Direção do Vento
+plt.figure(figsize=(8, 6))
+sns.boxplot(y=df['direcao_vento'])
+plt.title('Boxplot da Direção do Vento', fontsize=16)
+plt.ylabel('Direção do Vento (°)', fontsize=14)
+plt.yticks(fontsize=12)
+plt.grid(True)
+plt.show()
+
+# 8. Boxplot para a Pressão
+plt.figure(figsize=(8, 6))
+sns.boxplot(y=df['pressao'])
+plt.title('Boxplot da Pressão', fontsize=16)
+plt.ylabel('Pressão (hPa)', fontsize=14)
+plt.yticks(fontsize=12)
+plt.grid(True)
+plt.show()
+
+# 9. Gráfico de Temperatura para Período de 05-2016 a 08-2016 e Gráfico de 2016
+df_period_2016 = df[(df['data'] >= '2016-05-01') & (df['data'] <= '2016-08-31')]
+df_2016 = df[df['data'].dt.year == 2016]
+
+plt.figure(figsize=(14, 6))
+
+# Gráfico Maior
+plt.subplot(1, 2, 1)
+plt.plot(df_period_2016['data'], df_period_2016['temperatura'], color='c')
+plt.title('Temperatura de 05-2016 a 08-2016', fontsize=16)
+plt.xlabel('Data', fontsize=14)
+plt.ylabel('Temperatura (°C)', fontsize=14)
+plt.xticks(fontsize=10, rotation=45)
+plt.yticks(fontsize=12)
+plt.grid(True)
+
+# Gráfico Menor
+plt.subplot(1, 2, 2)
+plt.plot(df_2016['data'], df_2016['temperatura'], color='b')
+plt.title('Temperatura de 2016', fontsize=16)
+plt.xlabel('Data', fontsize=14)
+plt.ylabel('Temperatura (°C)', fontsize=14)
+plt.xticks(fontsize=10, rotation=45)
+plt.yticks(fontsize=12)
+plt.grid(True)
+
+plt.tight_layout()
+plt.show()
+
+# 10. Gráfico de Temperatura e Umidade para o Período de 05-2017 a 08-2017
+df_period_2017 = df[(df['data'] >= '2017-05-01') & (df['data'] <= '2017-08-31')]
+
+plt.figure(figsize=(14, 6))
+
+# Gráfico Maior de Temperatura
+plt.subplot(1, 2, 1)
+plt.plot(df_period_2017['data'], df_period_2017['temperatura'], color='r')
+plt.title('Temperatura de 05-2017 a 08-2017', fontsize=16)
+plt.xlabel('Data', fontsize=14)
+plt.ylabel('Temperatura (°C)', fontsize=14)
+plt.xticks(fontsize=10, rotation=45)
+plt.yticks(fontsize=12)
+plt.grid(True)
+
+# Gráfico Menor de Umidade
+plt.subplot(1, 2, 2)
+plt.plot(df_period_2017['data'], df_period_2017['umidade'], color='g')
+plt.title('Umidade de 05-2017 a 08-2017', fontsize=16)
+plt.xlabel('Data', fontsize=14)
+plt.ylabel('Umidade (%)', fontsize=14)
+plt.xticks(fontsize=10, rotation=45)
+plt.yticks(fontsize=12)
+plt.grid(True)
+
+plt.tight_layout()
+plt.show()
